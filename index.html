@@ -4,8 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
-    <p>HI</p>
-    <button>Click Me</button>
+    <style>
+      button {
+        transition: transform 0.2s; /* Makes the growth look smooth */
+        padding: 0.1px 0.2px;
+        cursor: pointer;
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3px;
+        height: 3px;
+        font-size: 10px;
+      }
+
+      p {
+        position: fixed;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+      }
+    </style>
+</head>
 <body>
+    <p>Intresting Names Portfolio</p>
+    
+    <button type="button" id="growBtn">
+      <img src="1-3337c93f.png" alt="" width="50">
+    </button>
+
+    <script>
+      let currentScale = 1; // Start at normal size
+      const btn = document.getElementById('growBtn');
+
+      btn.onclick = function() {
+        currentScale += 0.01; // Increase scale by 20% each click
+        btn.style.transform = `translateX(-50%) scale(${currentScale})`;
+      };
+    </script>
 </body>
 </html>
+
+<body> </body>
