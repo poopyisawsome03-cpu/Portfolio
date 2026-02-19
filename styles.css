@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  background-color: #0d0221;
+  background-image: 
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 2px, 3px 100%;
+  color: #fff;
+  min-height: 100vh;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* Background Grid Effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(transparent 0%, rgba(45, 23, 191, 0.2) 50%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, rgba(45, 23, 191, 0.2) 50%, transparent 100%);
+  background-size: 50px 50px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+header {
+  text-align: center;
+  padding: 60px 20px;
+  margin-bottom: 40px;
+  border: 4px solid #ff00ff;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 20px #ff00ff, inset 0 0 10px #ff00ff;
+}
+
+header h1 {
+  font-size: 2.2em;
+  margin-bottom: 20px;
+  color: #00ffff;
+  text-shadow: 3px 3px #ff00ff, 6px 6px #000;
+  line-height: 1.4;
+}
+
+header p {
+  font-size: 0.8em;
+  color: #fffb00;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.game-card {
+  background: #1a1a2e;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+}
+
+.game-card:hover {
+  transform: scale(1.05) rotate(1deg);
+  border-color: #ff00ff;
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.5);
+  z-index: 10;
+}
+
+.game-thumbnail {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #00ffff;
+}
+
+.game-card:hover .game-thumbnail {
+  border-bottom-color: #ff00ff;
+}
+
+/* Specific Thumbnails */
+.thumb-runner { background: linear-gradient(45deg, #ff0055, #ffdd00); }
+.thumb-railguns { background: linear-gradient(45deg, #00d2ff, #3a7bd5); }
+.thumb-zombie { background: linear-gradient(45deg, #1d4350, #af4034); }
+.thumb-rpg { background: linear-gradient(45deg, #6a11cb, #2575fc); }
+.thumb-tower { background: linear-gradient(45deg, #134e5e, #71b280); }
+
+.game-info {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-info h2 {
+  color: #00ffff;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.game-info p {
+  color: #ccc;
+  line-height: 1.6;
+  font-size: 0.55em;
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', sans-serif; /* Keep body text readable */
+}
+
+.play-button {
+  display: block;
+  text-align: center;
+  background: #ff00ff;
+  color: #fff;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 0.7em;
+  border: 2px solid #fff;
+  box-shadow: 4px 4px 0px #000;
+  transition: all 0.1s;
+  margin-top: auto;
+}
+
+.play-button:hover {
+  background: #00ffff;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000;
+}
+
+.play-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px #000;
+}
+
+#growBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ffb31d;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #000;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#growBtn:hover {
+  background: #00ff00;
+}
+
+#growBtn img {
+  width: 30px;
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.5em;
+  }
+  
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CRT Scanline Overlay */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 200;
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+}
+

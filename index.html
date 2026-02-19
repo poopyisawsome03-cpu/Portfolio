@@ -3,47 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <style>
-      button {
-        transition: transform 0.2s; /* Makes the growth look smooth */
-        padding: 0.1px 0.2px;
-        cursor: pointer;
-        position: fixed;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 3px;
-        height: 3px;
-        font-size: 10px;
-      }
-
-      p {
-        position: fixed;
-        top: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        margin: 0;
-      }
-    </style>
+    <title>My Games Collection</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <p>Intresting Names Portfolio</p>
-    
     <button type="button" id="growBtn">
-      <img src="1-3337c93f.png" alt="" width="50">
+      <img src="1-3337c93f.png" alt="" width="10">
     </button>
+    <div class="container">
+        <header>
+            <h1>🎮 My Games Collection</h1>
+            <p>Check out the games I've created!</p>
+        </header>
 
-    <script>
-      let currentScale = 1; // Start at normal size
-      const btn = document.getElementById('growBtn');
+        <div class="games-grid">
+            <!-- Game Card 1 -->
+            <div class="game-card">
+                <div class="game-thumbnail thumb-runner" aria-hidden="true">🏃‍♂️</div>
+                <div class="game-info">
+                    <h2>Endless Runner</h2>
+                    <p>Dash, dodge, and survive as the speed keeps climbing in this endless arcade runner.</p>
+                    <a href="Endless runner/index.html" class="play-button">Play Now</a>
+                </div>
+            </div>
 
-      btn.onclick = function() {
-        currentScale += 0.01; // Increase scale by 20% each click
-        btn.style.transform = `translateX(-50%) scale(${currentScale})`;
-      };
-    </script>
+            <!-- Game Card 2 -->
+            <div class="game-card">
+                <div class="game-thumbnail thumb-railguns" aria-hidden="true">💥🔫</div>
+                <div class="game-info">
+                    <h2>Railguns</h2>
+                    <p>Charge up and blast through waves of enemies with fast, punchy railgun action.</p>
+                    <a href="Railguns/index.html" class="play-button">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Game Card 3 -->
+            <div class="game-card">
+                <div class="game-thumbnail thumb-zombie" aria-hidden="true">🧟</div>
+                <div class="game-info">
+                    <h2>Zombie Slayer</h2>
+                    <p>Hold the line and clear the horde with tight controls and escalating waves.</p>
+                    <a href="Zombie slayer/index.html" class="play-button">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Game Card 4 -->
+            <div class="game-card">
+                <div class="game-thumbnail thumb-rpg" aria-hidden="true">⚔️🛡️</div>
+                <div class="game-info">
+                    <h2>Wave Survivor RPG</h2>
+                    <p>Survive endless waves, collect loot cards, and power up your hero in this casual RPG.</p>
+                    <a href="Casual RPG/index.html" class="play-button">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Game Card 5 -->
+            <div class="game-card">
+                <div class="game-thumbnail thumb-tower" aria-hidden="true">🏰🏹</div>
+                <div class="game-info">
+                    <h2>Tower Defence</h2>
+                    <p>Build powerful towers and defend your territory against waves of enemies.</p>
+                    <a href="tower defence/index.html" class="play-button">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Add more game cards as needed -->
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
-
-<body> </body>
