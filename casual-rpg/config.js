@@ -43,7 +43,7 @@ const bossCards = [
     { name: "Phoenix Feather",     icon: "🔥",  description: "+30 Max HP & +10 Damage",  rarity: "legendary", effect: p => { p.maxHealth += 30; p.health += 30; p.damage += 10; } },
     { name: "Ancient Relic",       icon: "🏺",  description: "+5 All Stats",             rarity: "legendary", effect: p => { p.damage += 5; p.armor += 5; p.maxHealth += 25; p.health += 25; } },
     { name: "Critical Master",     icon: "🎯",  description: "+15% Crit Chance",         rarity: "epic",      effect: p => p.critChance += 0.15 },
-    { name: "War God's Blessing",  icon: "⚡",  description: "+10 Dmg, +20% Speed",     rarity: "legendary", effect: p => { p.damage += 10; p.attackSpeed *= 1.2; } },
+    { name: "War God's Blessing",  icon: "⚡",  description: "+10 Dmg, +55% Speed",     rarity: "legendary", effect: p => { p.damage += 10; p.attackSpeed *= 1.55; } },
 
     // ── Weapon mega-upgrades ──
     { name: "Whirlwind Blade",     icon: "🌀",  description: "Sword: +30 Dmg, +20 Radius, +Spin",  rarity: "legendary",
