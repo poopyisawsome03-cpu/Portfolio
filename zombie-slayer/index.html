@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zombie Slayer 1D</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <a class="back-button" href="../index.html">← Back to Portfolio</a>
+        <canvas id="game" width="900" height="600"></canvas>
+        <div id="ui">
+            <div class="ui-box" id="scoreDisplay">Score: 0</div>
+            <div class="ui-box" id="waveDisplay">Wave: 1</div>
+            <div class="ui-box">
+                <div class="health-bar-bg">
+                    <div class="health-bar" id="healthBar" style="width:100%"></div>
+                </div>
+            </div>
+            <div class="ui-box" id="killDisplay">Kills: 0</div>
+        </div>
+        <div id="waveAnnounce"></div>
+        <div id="overlay">
+            <h1>ZOMBIE SLAYER</h1>
+            <h2>Survive the Horde</h2>
+            <div class="controls">
+                <p><span>A / D</span> or <span>Arrow Keys</span> — Move left / right</p>
+                <p><span>Space</span> or <span>Left Click</span> — Swing sword</p>
+                <p><span>Shift</span> — Dash (cooldown 2s)</p>
+            </div>
+            <div class="zombie-info">
+                <div class="zombie-card"><div class="name" style="color:#2ecc71">Normal</div>Balanced stats</div>
+                <div class="zombie-card"><div class="name" style="color:#3498db">Fast</div>Quick but fragile</div>
+                <div class="zombie-card"><div class="name" style="color:#e74c3c">Strong</div>Hits hard</div>
+                <div class="zombie-card"><div class="name" style="color:#9b59b6">Big</div>Tanky & slow</div>
+                <div class="zombie-card"><div class="name" style="color:#f39c12">Berserker</div>Fast & strong</div>
+                <div class="zombie-card"><div class="name" style="color:#1abc9c">Boss</div>Every 5 waves</div>
+            </div>
+            <button id="startBtn">START GAME</button>
+            <p style="margin-top:12px;color:#666;font-size:13px;">Kill zombies. Survive waves. Don't die.</p>
+        </div>
+    </div>
+
+    <!-- Load scripts in dependency order -->
+    <script src="config.js"></script>
+    <script src="state.js"></script>
+    <script src="effects.js"></script>
+    <script src="player.js"></script>
+    <script src="zombie.js"></script>
+    <script src="waves.js"></script>
+    <script src="ui.js"></script>
+    <script src="renderer.js"></script>
+    <script src="update.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

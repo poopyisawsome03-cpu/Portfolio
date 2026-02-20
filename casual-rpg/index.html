@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Survivor RPG</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="../index.html" class="back-to-portfolio">← Portfolio</a>
+
+    <!-- Start Screen -->
+    <div class="start-screen" id="startScreen">
+        <h1>🔫 Wave Survivor RPG 🔫</h1>
+        <p>Survive endless waves from every direction!</p>
+        <div class="difficulty-picker">
+            <label for="difficultySelect">Difficulty:</label>
+            <select id="difficultySelect">
+                <option value="easy">Easy</option>
+                <option value="normal" selected>Normal</option>
+                <option value="hard">Hard</option>
+                <option value="insane">Insane</option>
+            </select>
+        </div>
+        <button class="start-btn" onclick="startGame()">Start Game</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div class="game-over" id="gameOver">
+        <h1>💀 Game Over 💀</h1>
+        <div class="stats-summary">
+            <p>Wave Reached: <span id="finalWave">0</span></p>
+            <p>Enemies Defeated: <span id="finalKills">0</span></p>
+            <p>Cards Collected: <span id="finalCards">0</span></p>
+        </div>
+        <button class="restart-btn" onclick="restartGame()">Play Again</button>
+    </div>
+
+    <!-- Card Selection Modal -->
+    <div class="modal-overlay" id="cardModal">
+        <div class="card-selection">
+            <h2 id="cardTitle">Choose Your Reward!</h2>
+            <div class="cards-container" id="cardsContainer"></div>
+        </div>
+    </div>
+
+    <!-- Main Game -->
+    <div class="game-layout">
+        <div class="game-container">
+            <div class="header">
+                <div class="wave-info" id="waveInfo">Wave 1</div>
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-icon">❤️</span>
+                        <div class="health-bar-container">
+                            <div class="health-bar" id="healthBar"></div>
+                        </div>
+                        <span id="healthText">100/100</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">🔫</span>
+                        <span id="damageText">10</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">🛡️</span>
+                        <span id="armorText">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">💀</span>
+                        <span id="killsText">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-arena" id="gameArena">
+                <div class="arena-floor"></div>
+                <div class="entity player" id="player">
+                    <div class="player-face"></div>
+                    <div class="player-gun"></div>
+                </div>
+            </div>
+
+            <div class="controls-info">
+                <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / Arrows — Move |
+                All weapons auto-fire!
+            </div>
+        </div>
+
+        <!-- Side Panel with Tabs -->
+        <div class="side-panel">
+            <div class="side-tabs">
+                <button class="side-tab active" data-tab="weapons" onclick="switchTab('weapons')">⚔️ Weapons</button>
+                <button class="side-tab" data-tab="buffs" onclick="switchTab('buffs')">✨ Buffs</button>
+                <button class="side-tab" data-tab="debuffs" onclick="switchTab('debuffs')">💀 Debuffs</button>
+            </div>
+            <div class="side-tab-content active" id="tab-weapons">
+                <div class="weapons-display" id="weaponsDisplay">
+                    <span style="color: #666;">Pistol only</span>
+                </div>
+            </div>
+            <div class="side-tab-content" id="tab-buffs">
+                <div class="buffs-display" id="buffsDisplay">
+                    <span style="color: #666;">No buffs yet – defeat enemies to earn cards!</span>
+                </div>
+            </div>
+            <div class="side-tab-content" id="tab-debuffs">
+                <div class="debuffs-display" id="debuffsDisplay">
+                    <span style="color: #666;">No debuffs – mythical cards carry a price!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="state.js"></script>
+    <script src="config.js"></script>
+    <script src="ui.js"></script>
+    <script src="enemies.js"></script>
+    <script src="player.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
