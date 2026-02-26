@@ -25,13 +25,26 @@ const cityFront = makeSkyline(14, 15, 40, 8, 18);
 
 /* ---------- sky ---------- */
 function drawGradientSky() {
-  const t = clamp((getSpeed() - run.base) / (run.max - run.base), 0, 1);
-  const topR = lerp(PAL.skyTop[0], 30, t);
-  const topG = lerp(PAL.skyTop[1], 5, t);
-  const topB = lerp(PAL.skyTop[2], 40, t);
-  const botR = lerp(PAL.skyBot[0], 40, t);
-  const botG = lerp(PAL.skyBot[1], 8, t);
-  const botB = lerp(PAL.skyBot[2], 60, t);
+  const t = transitionThemeProgress;
+  const themeA = THEMES.default;
+  const themeB = THEMES.hell;
+  
+  const speedT = clamp((getSpeed() - run.base) / (run.max - run.base), 0, 1);
+  
+  // Interpolate between themes based on t
+  const mixTopR = lerp(themeA.skyTop[0], themeB.skyTop[0], t);
+  const mixTopG = lerp(themeA.skyTop[1], themeB.skyTop[1], t);
+  const mixTopB = lerp(themeA.skyTop[2], themeB.skyTop[2], t);
+  const mixBotR = lerp(themeA.skyBot[0], themeB.skyBot[0], t);
+  const mixBotG = lerp(themeA.skyBot[1], themeB.skyBot[1], t);
+  const mixBotB = lerp(themeA.skyBot[2], themeB.skyBot[2], t);
+
+  const topR = lerp(mixTopR, mixTopR + 20, speedT);
+  const topG = lerp(mixTopG, mixTopG + 5, speedT);
+  const topB = lerp(mixTopB, mixTopB + 20, speedT);
+  const botR = lerp(mixBotR, mixBotR + 20, speedT);
+  const botG = lerp(mixBotG, mixBotG + 5, speedT);
+  const botB = lerp(mixBotB, mixBotB + 15, speedT);
 
   const grad = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
   grad.addColorStop(0, rgba(topR, topG, topB, 1));
@@ -381,6 +394,26 @@ function drawCanvasHUD() {
   ctx.fillRect(10, 4, barW * pct, 3);
   ctx.globalAlpha = 1;
 
+  if (transitionState === "message") {
+    // Dim background
+    ctx.fillStyle = "rgba(0,0,0,0.4)";
+    ctx.fillRect(0, 0, W, H);
+    
+    // Draw "long line" (cinematic bars)
+    ctx.fillStyle = "rgba(255, 62, 108, 0.8)";
+    const lineH = 20;
+    ctx.fillRect(0, H/2 - lineH, W, lineH * 2);
+    
+    // Draw text
+    ctx.fillStyle = "#fff";
+    ctx.font = "12px 'Press Start 2P', monospace";
+    ctx.textAlign = "center";
+    ctx.fillText("500 MARK HIT", W / 2, H / 2 - 2);
+    ctx.font = "6px 'Press Start 2P', monospace";
+    ctx.fillText("UPGRADING SYSTEM...", W / 2, H / 2 + 10);
+    ctx.textAlign = "left";
+  }
+
   if (state === "gameover") {
     const flash = Math.sin(globalTime * 4) * 0.1 + 0.15;
     ctx.fillStyle = rgba(255, 62, 108, flash);
@@ -409,11 +442,21 @@ function draw() {
   ctx.save();
   ctx.translate(Math.floor(screenShake.x), Math.floor(screenShake.y));
 
+  const t = transitionThemeProgress;
+  const themeA = THEMES.default;
+  const themeB = THEMES.hell;
+
+  // Mix city colors (swap midway)
+  const city1 = t < 0.5 ? themeA.city1 : themeB.city1;
+  const city2 = t < 0.5 ? themeA.city2 : themeB.city2;
+  const glow1 = t < 0.5 ? themeA.glow1 : themeB.glow1;
+  const glow2 = t < 0.5 ? themeA.glow2 : themeB.glow2;
+
   drawGradientSky();
   drawStars();
   drawMoon();
-  drawCityLayer(cityBack, 0.08, PAL.city1, PAL.neonBlue);
-  drawCityLayer(cityFront, 0.15, PAL.city2, PAL.neonPurple);
+  drawCityLayer(cityBack, 0.08, city1, glow1);
+  drawCityLayer(cityFront, 0.15, city2, glow2);
   drawGround();
   drawSpeedLines();
 

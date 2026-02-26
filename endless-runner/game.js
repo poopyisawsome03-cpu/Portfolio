@@ -10,6 +10,9 @@ ctx.imageSmoothingEnabled = false;
 
 /* ---------- game state ---------- */
 let lastTime = 0, state = "ready", globalTime = 0;
+let transitionState = "none"; // "none", "slowdown", "message", "speedup"
+let transitionTimer = 0;
+let transitionThemeProgress = 0; // 0 to 1 for smooth lerp
 
 const player = {
   x: 50, y: GROUND_Y - 48, w: 32, h: 48,
@@ -52,6 +55,9 @@ function resetGame() {
   player.trailX.length = 0;
   player.trailY.length = 0;
   screenShake.trauma = 0;
+  transitionState = "none";
+  transitionTimer = 0;
+  transitionThemeProgress = 0;
   state = "ready";
   stateEl.textContent = "Click to start";
 }
@@ -101,27 +107,66 @@ function getSlashBox() {
 
 /* ---------- update ---------- */
 function update(dt) {
+  let effectiveDt = dt;
+  const currentScore = run.dist / 10;
+
+  // milestone transition (500)
+  if (currentScore >= 499.5 && transitionState === "none") {
+    transitionState = "slowdown";
+    transitionTimer = 0;
+    // Clear all items so player doesn't die during transition
+    obstacles.length = 0;
+  }
+
+  if (transitionState !== "none") {
+    transitionTimer += dt;
+    if (transitionState === "slowdown") {
+      effectiveDt = dt * Math.max(0.1, 1 - transitionTimer / 1.5);
+      if (transitionTimer >= 1.5) {
+        transitionState = "message";
+        transitionTimer = 0;
+      }
+    } else if (transitionState === "message") {
+      effectiveDt = dt * 0.1;
+      // update progress for theme transition
+      transitionThemeProgress = Math.min(1, transitionThemeProgress + dt * 0.4);
+      if (transitionTimer >= 2.0) {
+        transitionState = "speedup";
+        transitionTimer = 0;
+      }
+    } else if (transitionState === "speedup") {
+      effectiveDt = dt * Math.min(1.0, 0.1 + transitionTimer / 1.0);
+      if (transitionTimer >= 1.0) {
+        transitionState = "done";
+        // Put the items back but farther away (delay spawner)
+        spawner.timer = 2.0;
+      }
+    }
+  } else if (currentScore >= 500) {
+    transitionThemeProgress = 1;
+  }
+
   globalTime += dt;
 
   updateScreenShake(dt);
-  updateParticles(dt);
-  updateSlashArcs(dt);
+  updateParticles(effectiveDt);
+  updateSlashArcs(effectiveDt);
 
   if (state !== "playing") return;
 
   const speed = getSpeed();
-  run.dist += speed * dt;
+  run.dist += speed * effectiveDt;
 
   // spawner
-  spawner.timer -= dt;
+  spawner.timer -= effectiveDt;
   if (spawner.timer <= 0) {
     spawnObstacle();
     spawner.timer = Math.max(0.35, 1.0 - (speed - run.base) * 0.003);
   }
 
   // player physics
-  player.vy += physics.gravity * dt;
-  player.y += player.vy * dt;
+  player.vy += physics.gravity * effectiveDt;
+  player.y += player.vy * effectiveDt;
   if (player.y + player.h >= GROUND_Y) {
     player.y = GROUND_Y - player.h;
     player.vy = 0;
@@ -129,7 +174,7 @@ function update(dt) {
   }
 
   // run animation
-  player.runAccum += dt * (speed / run.base);
+  player.runAccum += effectiveDt * (speed / run.base);
   if (player.runAccum > 0.1) {
     player.runAccum = 0;
     player.runFrame = (player.runFrame + 1) % 4;
@@ -142,13 +187,13 @@ function update(dt) {
   if (player.trailX.length > 8) { player.trailX.shift(); player.trailY.shift(); }
 
   // slash timers
-  if (player.slashTimer > 0) player.slashTimer = Math.max(0, player.slashTimer - dt);
-  if (player.slashCooldown > 0) player.slashCooldown -= dt;
+  if (player.slashTimer > 0) player.slashTimer = Math.max(0, player.slashTimer - effectiveDt);
+  if (player.slashCooldown > 0) player.slashCooldown -= effectiveDt;
 
   // obstacles
   for (let i = obstacles.length - 1; i >= 0; i--) {
-    obstacles[i].x -= speed * dt;
-    obstacles[i].timer += dt;
+    obstacles[i].x -= speed * effectiveDt;
+    obstacles[i].timer += effectiveDt;
     if (obstacles[i].timer > 0.15) { obstacles[i].timer = 0; obstacles[i].frame = (obstacles[i].frame + 1) % 2; }
     if (obstacles[i].x + obstacles[i].w < -10) obstacles.splice(i, 1);
   }
