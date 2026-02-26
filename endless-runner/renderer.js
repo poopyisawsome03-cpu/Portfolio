@@ -233,45 +233,58 @@ function drawPixelEnemy(o) {
   ctx.fillStyle = eg;
   ctx.fillRect(ox - 18, oy - 12, 64, 68);
 
+  // Body
   ctx.fillStyle = "#2d1640";
   ctx.fillRect(ox + 2, oy + 10, 24, 20);
-
+  
+  // Detailing - armor plates
   ctx.fillStyle = "#3b2060";
-  ctx.fillRect(ox + 4, oy + 12, 20, 4);
-  ctx.fillRect(ox + 6, oy + 24, 16, 3);
+  ctx.fillRect(ox + 4, oy + 12, 20, 6);
+  ctx.fillRect(ox + 6, oy + 24, 16, 4);
 
+  // Legs - Smoother 4-frame walk
   ctx.fillStyle = "#1a0e2a";
   const lf = o.frame;
   if (lf === 0) {
-    ctx.fillRect(ox + 4, oy + 30, 6, 10);
-    ctx.fillRect(ox + 18, oy + 30, 6, 10);
+    ctx.fillRect(ox + 4, oy + 30, 6, 12);
+    ctx.fillRect(ox + 18, oy + 30, 6, 12);
+  } else if (lf === 1) {
+    ctx.fillRect(ox + 2, oy + 28, 6, 14);
+    ctx.fillRect(ox + 16, oy + 30, 6, 12);
+  } else if (lf === 2) {
+    ctx.fillRect(ox + 6, oy + 30, 6, 12);
+    ctx.fillRect(ox + 20, oy + 28, 6, 14);
   } else {
-    ctx.fillRect(ox + 2, oy + 28, 6, 12);
-    ctx.fillRect(ox + 20, oy + 30, 6, 10);
+    ctx.fillRect(ox + 5, oy + 28, 6, 14);
+    ctx.fillRect(ox + 17, oy + 28, 6, 14);
   }
 
+  // Feet
   ctx.fillStyle = "#2d1640";
-  ctx.fillRect(ox + 3, oy + 38, 8, 6);
-  ctx.fillRect(ox + 17, oy + 38, 8, 6);
+  ctx.fillRect(ox + 3, oy + 40, 8, 4);
+  ctx.fillRect(ox + 17, oy + 40, 8, 4);
 
+  // Head
   ctx.fillStyle = "#3b2060";
-  ctx.fillRect(ox + 4, oy - 2, 20, 12);
+  ctx.fillRect(ox + 3, oy - 2, 22, 12);
   ctx.fillStyle = PAL.neonPink;
-  ctx.fillRect(ox + 2, oy - 6, 3, 6);
-  ctx.fillRect(ox + 23, oy - 6, 3, 6);
+  ctx.fillRect(ox + 2, oy - 6, 4, 6);
+  ctx.fillRect(ox + 22, oy - 6, 4, 6);
 
-  const eyeFlicker = Math.sin(globalTime * 8 + o.x) > 0 ? 1 : 0.6;
+  // Glowing Eyes
+  const eyeFlicker = Math.sin(globalTime * 12 + o.x) * 0.2 + 0.8;
   ctx.globalAlpha = eyeFlicker;
   ctx.fillStyle = PAL.neonPink;
-  ctx.fillRect(ox + 7, oy + 2, 4, 4);
-  ctx.fillRect(ox + 17, oy + 2, 4, 4);
+  ctx.fillRect(ox + 7, oy + 2, 5, 5);
+  ctx.fillRect(ox + 16, oy + 2, 5, 5);
   ctx.globalAlpha = 1;
 
+  // Arm/Weapon
   ctx.fillStyle = "#aa3355";
-  ctx.fillRect(ox - 4, oy + 10, 6, 2);
-  ctx.fillRect(ox - 6, oy + 6, 2, 10);
+  ctx.fillRect(ox - 4, oy + 12, 6, 3);
+  ctx.fillRect(ox - 6, oy + 8, 2, 12);
   ctx.fillStyle = PAL.neonPink;
-  ctx.fillRect(ox - 6, oy + 4, 2, 4);
+  ctx.fillRect(ox - 6, oy + 5, 3, 4);
 }
 
 /* ---------- spike sprite ---------- */
@@ -285,31 +298,33 @@ function drawPixelSpike(o) {
   ctx.fillStyle = sg;
   ctx.fillRect(ox - 14, oy - 14, 52, 52);
 
+  // Base
   ctx.fillStyle = "#2a1a0e";
-  ctx.fillRect(ox, oy + 18, 24, 12);
+  ctx.fillRect(ox - 2, oy + 18, 28, 12);
   ctx.fillStyle = "#3a2a16";
-  ctx.fillRect(ox + 2, oy + 16, 20, 4);
+  ctx.fillRect(ox, oy + 16, 24, 4);
 
+  // Spikes
   ctx.fillStyle = PAL.neonOrange;
-  ctx.fillRect(ox + 1, oy + 8, 4, 12);
-  ctx.fillRect(ox + 7, oy + 2, 4, 18);
-  ctx.fillRect(ox + 13, oy + 5, 4, 15);
+  ctx.fillRect(ox + 1, oy + 6, 4, 14);
+  ctx.fillRect(ox + 7, oy + 0, 4, 20);
+  ctx.fillRect(ox + 13, oy + 4, 4, 16);
   ctx.fillRect(ox + 19, oy + 8, 4, 12);
 
-  ctx.fillStyle = "#ffdd55";
-  ctx.fillRect(ox + 1, oy + 6, 4, 4);
-  ctx.fillRect(ox + 7, oy, 4, 4);
-  ctx.fillRect(ox + 13, oy + 3, 4, 4);
-  ctx.fillRect(ox + 19, oy + 6, 4, 4);
-
-  const tip = Math.sin(globalTime * 6 + ox) * 0.3 + 0.7;
-  ctx.globalAlpha = tip;
-  ctx.fillStyle = "#ffcc44";
-  ctx.fillRect(ox + 8, oy - 2, 3, 3);
-  ctx.fillRect(ox + 2, oy + 5, 3, 3);
-  ctx.fillRect(ox + 14, oy + 2, 3, 3);
-  ctx.fillRect(ox + 20, oy + 5, 3, 3);
+  // Hot Tips
+  ctx.fillStyle = "#fff";
+  const glow = Math.sin(globalTime * 8 + ox) * 0.2 + 0.8;
+  ctx.globalAlpha = glow;
+  ctx.fillRect(ox + 1, oy + 5, 4, 3);
+  ctx.fillRect(ox + 7, oy - 1, 4, 3);
+  ctx.fillRect(ox + 13, oy + 3, 4, 3);
+  ctx.fillRect(ox + 19, oy + 7, 4, 3);
   ctx.globalAlpha = 1;
+
+  // Steam/Heat particles
+  if (Math.random() > 0.95) {
+     spawnParticle(ox + rng(0, 24), oy + 10, rng(-5, 5), rng(-10, -30), rng(0.2, 0.4), PAL.neonOrange, 1.5);
+  }
 }
 
 /* ---------- slash arcs ---------- */
@@ -320,19 +335,19 @@ function drawSlashArcs() {
 
     ctx.save();
     ctx.translate(arc.x, arc.y);
-    ctx.rotate(-0.3 + progress * 1.2);
+    ctx.rotate(-0.3 + progress * 1.5); // More rotation
 
     ctx.globalAlpha = alpha;
     ctx.strokeStyle = PAL.neonPink;
-    ctx.lineWidth = 3 - progress * 2;
+    ctx.lineWidth = 4 - progress * 3; // Thicker
     ctx.beginPath();
-    ctx.arc(0, 0, 10 + progress * 12, -Math.PI * 0.4, Math.PI * 0.4);
+    ctx.arc(0, 0, 12 + progress * 16, -Math.PI * 0.4, Math.PI * 0.4);
     ctx.stroke();
 
     ctx.strokeStyle = "#fff";
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 2; // Thicker core
     ctx.beginPath();
-    ctx.arc(0, 0, 8 + progress * 10, -Math.PI * 0.3, Math.PI * 0.3);
+    ctx.arc(0, 0, 10 + progress * 14, -Math.PI * 0.3, Math.PI * 0.3);
     ctx.stroke();
 
     ctx.globalAlpha = 1;
@@ -343,15 +358,22 @@ function drawSlashArcs() {
 /* ---------- particles ---------- */
 function drawParticles() {
   for (const p of particles) {
-    const alpha = clamp(p.life / p.maxLife, 0, 1);
+    const lifePct = clamp(p.life / p.maxLife, 0, 1);
     const c = hexToRgb(p.color);
-    ctx.fillStyle = rgba(c[0], c[1], c[2], alpha);
-    const sz = p.size * alpha;
+    
+    // Smooth fade instead of aggressive flicker
+    ctx.globalAlpha = lifePct;
+    ctx.fillStyle = rgba(c[0], c[1], c[2], 1);
+    
+    // Smoothly shrink as they die
+    const sz = p.size * (0.4 + 0.6 * lifePct);
     ctx.fillRect(Math.floor(p.x), Math.floor(p.y), Math.ceil(sz), Math.ceil(sz));
 
-    ctx.fillStyle = rgba(255, 255, 255, alpha * 0.5);
-    ctx.fillRect(Math.floor(p.x), Math.floor(p.y), 1, 1);
+    // Core is brighter but smaller
+    ctx.fillStyle = rgba(255, 255, 255, lifePct * 0.8);
+    ctx.fillRect(Math.floor(p.x), Math.floor(p.y), sz * 0.4, sz * 0.4);
   }
+  ctx.globalAlpha = 1;
 }
 
 /* ---------- speed lines ---------- */

@@ -194,7 +194,11 @@ function update(dt) {
   for (let i = obstacles.length - 1; i >= 0; i--) {
     obstacles[i].x -= speed * effectiveDt;
     obstacles[i].timer += effectiveDt;
-    if (obstacles[i].timer > 0.15) { obstacles[i].timer = 0; obstacles[i].frame = (obstacles[i].frame + 1) % 2; }
+    // Faster, 4-frame animation for smoother look
+    if (obstacles[i].timer > 0.08) { 
+        obstacles[i].timer = 0; 
+        obstacles[i].frame = (obstacles[i].frame + 1) % 4; 
+    }
     if (obstacles[i].x + obstacles[i].w < -10) obstacles.splice(i, 1);
   }
 

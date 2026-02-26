@@ -70,7 +70,7 @@ function updateParticles(dt) {
     const p = particles[i];
     p.x += p.vx * dt;
     p.y += p.vy * dt;
-    p.vy += 200 * dt;
+    // Remove p.vy += 200 * dt; to make flow smoother
     p.life -= dt;
     if (p.life <= 0) particles.splice(i, 1);
   }
