@@ -19,5 +19,5 @@ const PAL = {
   dark:      "#0a0a14",
 };
 
-const physics = { gravity: 1800, jumpVel: -620 };
+const physics = { gravity: 1800, jumpVel: -620, quickFall: 1000 };
 const run     = { base: 130, scale: 0.03, max: 400, dist: 0 };

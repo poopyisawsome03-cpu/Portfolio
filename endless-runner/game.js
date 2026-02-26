@@ -77,6 +77,11 @@ function handleJump() {
   }
 }
 
+function handleQuickFall() {
+  if (state !== "playing" || player.grounded) return;
+  player.vy = Math.max(player.vy, physics.quickFall);
+}
+
 function handleSlash() {
   if (state === "ready") startGame();
   if (state !== "playing") return;
@@ -182,7 +187,8 @@ window.addEventListener("keydown", e => {
     e.preventDefault();
     handleJump();
   }
-  if (e.code === "KeyX") handleSlash();
+  if (e.code === "KeyQ") handleQuickFall();
+  if (e.code === "KeyE") handleSlash();
   if (e.code === "KeyR") resetGame();
 });
 
